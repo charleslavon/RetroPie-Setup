@@ -71,14 +71,10 @@ function get_os_version() {
     __os_desc="${os[1]}"
     __os_release="${os[2]}"
     __os_codename="${os[3]}"
-    
+
     local error=""
     case "$__os_id" in
         Raspbian|Debian)
-            if compareVersions "$__os_release" ge 9 && isPlatform "rpi"; then
-                error="Sorry - Raspbian/Debian Stretch (and newer) is not yet supported on the RPI"
-            fi
-
             if compareVersions "$__os_release" lt 8; then
                 error="You need Raspbian/Debian Jessie or newer"
             fi
@@ -152,7 +148,7 @@ function get_os_version() {
             error="Unsupported OS"
             ;;
     esac
-    
+
     [[ -n "$error" ]] && fatalError "$error\n\n$(lsb_release -idrc)"
 
     # add 32bit/64bit to platform flags
